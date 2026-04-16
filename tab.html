@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<script src="/plugins/sdk/devops-pilot-sdk.js"></script>
+<script src="/plugins/sdk/symphonee-sdk.js"></script>
 <style>
   * { box-sizing: border-box; }
   ::-webkit-scrollbar { width: 7px; height: 7px; }
@@ -208,7 +208,7 @@
 
 <div id="setupScreen" class="empty-state" style="display:none;height:100vh;">
   <h2>Slack Bridge</h2>
-  <p>Connect your Slack workspace to read channels, reply to threads, and post messages -- all without leaving DevOps Pilot.</p>
+  <p>Connect your Slack workspace to read channels, reply to threads, and post messages -- all without leaving Symphonee.</p>
   <div class="setup-steps">
     <ol>
       <li>Go to <strong>api.slack.com/apps</strong> and click <strong>Create New App</strong></li>
@@ -219,7 +219,7 @@
       </li>
       <li>Click <strong>Install to Workspace</strong> and authorize</li>
       <li>Copy the <strong>Bot User OAuth Token</strong> (starts with <code>xoxb-</code>)</li>
-      <li>In DevOps Pilot, go to <strong>Settings > Plugins > Slack Bridge</strong> and paste the token</li>
+      <li>In Symphonee, go to <strong>Settings > Plugins > Slack Bridge</strong> and paste the token</li>
     </ol>
   </div>
 </div>
@@ -424,7 +424,7 @@ async function connect() {
       await loadChannels();
     } else {
       dot.className = 'conn-dot err';
-      DevOpsPilot.toast('Slack connection failed: ' + (test.error || 'unknown'), 'error');
+      Symphonee.toast('Slack connection failed: ' + (test.error || 'unknown'), 'error');
     }
   } catch (e) {
     dot.className = 'conn-dot err';
@@ -683,13 +683,13 @@ async function sendMessage() {
     if (result.ok) {
       input.value = '';
       input.style.height = 'auto';
-      DevOpsPilot.toast('Message sent', 'success');
+      Symphonee.toast('Message sent', 'success');
       await loadMessages();
     } else {
-      DevOpsPilot.toast('Failed: ' + (result.error || 'unknown error'), 'error');
+      Symphonee.toast('Failed: ' + (result.error || 'unknown error'), 'error');
     }
   } catch (e) {
-    DevOpsPilot.toast('Failed to send message', 'error');
+    Symphonee.toast('Failed to send message', 'error');
   }
   input.disabled = false;
   input.focus();
@@ -708,13 +708,13 @@ async function sendThreadReply() {
     if (result.ok) {
       input.value = '';
       input.style.height = 'auto';
-      DevOpsPilot.toast('Reply sent', 'success');
+      Symphonee.toast('Reply sent', 'success');
       await openThread(currentThreadChannel, currentThreadTs);
     } else {
-      DevOpsPilot.toast('Failed: ' + (result.error || 'unknown error'), 'error');
+      Symphonee.toast('Failed: ' + (result.error || 'unknown error'), 'error');
     }
   } catch (e) {
-    DevOpsPilot.toast('Failed to send reply', 'error');
+    Symphonee.toast('Failed to send reply', 'error');
   }
   input.disabled = false;
   input.focus();
@@ -744,31 +744,31 @@ function aiAction(type) {
   var chName = currentChannel ? currentChannel.name : 'the selected channel';
   switch (type) {
     case 'standup':
-      DevOpsPilot.askAi('Generate a standup summary from my current sprint work items and post it to the Slack channel #' + chName + '. First show me the draft, then ask for my approval before posting.');
+      Symphonee.askAi('Generate a standup summary from my current sprint work items and post it to the Slack channel #' + chName + '. First show me the draft, then ask for my approval before posting.');
       break;
     case 'pr-status':
-      DevOpsPilot.askAi('Summarize all open pull requests and post a status update to Slack channel #' + chName + '. Show me the draft first and ask before posting.');
+      Symphonee.askAi('Summarize all open pull requests and post a status update to Slack channel #' + chName + '. Show me the draft first and ask before posting.');
       break;
     case 'summarize':
       if (!currentChannel) {
-        DevOpsPilot.toast('Select a channel first', 'warning');
+        Symphonee.toast('Select a channel first', 'warning');
         return;
       }
-      DevOpsPilot.askAi('Read the recent messages in the Slack channel #' + chName + ' (channel ID: ' + currentChannel.id + ') and give me a summary of the key discussions and action items.');
+      Symphonee.askAi('Read the recent messages in the Slack channel #' + chName + ' (channel ID: ' + currentChannel.id + ') and give me a summary of the key discussions and action items.');
       break;
     case 'draft':
       if (!currentChannel) {
-        DevOpsPilot.toast('Select a channel first', 'warning');
+        Symphonee.toast('Select a channel first', 'warning');
         return;
       }
-      DevOpsPilot.askAi('I want to draft a message for the Slack channel #' + chName + '. Ask me what I want to say, then help me write it. Do not send it -- just show me the draft.');
+      Symphonee.askAi('I want to draft a message for the Slack channel #' + chName + '. Ask me what I want to say, then help me write it. Do not send it -- just show me the draft.');
       break;
   }
 }
 
 function aiDraftInline() {
   if (!currentChannel) return;
-  DevOpsPilot.askAi('Help me draft a message for the Slack channel #' + currentChannel.name + '. Ask me what I want to communicate, write a polished version, and paste it so I can review before sending.');
+  Symphonee.askAi('Help me draft a message for the Slack channel #' + currentChannel.name + '. Ask me what I want to communicate, write a polished version, and paste it so I can review before sending.');
 }
 
 function aiAboutMsg(encodedTs) {
@@ -778,12 +778,12 @@ function aiAboutMsg(encodedTs) {
     if (currentMessages[i].ts === ts) { msg = currentMessages[i]; break; }
   }
   if (!msg) return;
-  DevOpsPilot.askAi('A Slack message from ' + msg.userName + ' in #' + currentChannel.name + ' says: "' + msg.text + '". Help me understand this and suggest a reply if appropriate.');
+  Symphonee.askAi('A Slack message from ' + msg.userName + ' in #' + currentChannel.name + ' says: "' + msg.text + '". Help me understand this and suggest a reply if appropriate.');
 }
 
 // ── Work Item Links ──────────────────────────────────────────────────────────
 function openWorkItem(id) {
-  DevOpsPilot.viewWorkItem(id);
+  Symphonee.viewWorkItem(id);
 }
 
 // ── Mobile ───────────────────────────────────────────────────────────────────
@@ -792,13 +792,13 @@ function toggleSidebar() {
 }
 
 // ── Tab Activation ───────────────────────────────────────────────────────────
-DevOpsPilot.on('tabActivated', function (data) {
+Symphonee.on('tabActivated', function (data) {
   if (data && data.tab && data.tab.indexOf('slack') !== -1) {
     refresh();
   }
 });
 
-DevOpsPilot.on('configChanged', function () {
+Symphonee.on('configChanged', function () {
   init();
 });
 

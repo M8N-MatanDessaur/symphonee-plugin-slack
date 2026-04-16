@@ -1,6 +1,6 @@
 ## Slack Bridge Plugin -- AI Instructions
 
-You have access to a Slack integration plugin via the DevOps Pilot API. This lets you read channels, reply to threads, and post messages from the terminal.
+You have access to a Slack integration plugin via the Symphonee API. This lets you read channels, reply to threads, and post messages from the terminal.
 
 **All routes are at** `http://127.0.0.1:3800/api/plugins/slack/`
 
@@ -54,7 +54,7 @@ curl -s http://127.0.0.1:3800/api/plugins/slack/channels/CHANNEL_ID/thread/THREA
 # Send a message (REQUIRES USER PERMISSION)
 curl -s -X POST http://127.0.0.1:3800/api/plugins/slack/messages/send \
   -H "Content-Type: application/json" \
-  -d '{"channel":"CHANNEL_ID","text":"Hello from DevOps Pilot"}'
+  -d '{"channel":"CHANNEL_ID","text":"Hello from Symphonee"}'
 
 # Reply in a thread (REQUIRES USER PERMISSION)
 curl -s -X POST http://127.0.0.1:3800/api/plugins/slack/messages/send \

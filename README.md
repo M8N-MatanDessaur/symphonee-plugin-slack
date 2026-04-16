@@ -1,6 +1,6 @@
-# Slack Bridge -- DevOps Pilot Plugin
+# Slack Bridge -- Symphonee Plugin
 
-Read Slack channels, reply to threads, and post messages without leaving DevOps Pilot.
+Read Slack channels, reply to threads, and post messages without leaving Symphonee.
 
 ## Setup
 
@@ -21,7 +21,7 @@ Read Slack channels, reply to threads, and post messages without leaving DevOps 
 4. Optionally add `search:read` scope if using a **User Token** (xoxp-) for message search
 5. Click **Install to Workspace** and authorize
 6. Copy the **Bot User OAuth Token** (starts with `xoxb-`)
-7. In DevOps Pilot, go to **Settings > Plugins > Slack Bridge** and paste the token
+7. In Symphonee, go to **Settings > Plugins > Slack Bridge** and paste the token
 
 ## Features
 

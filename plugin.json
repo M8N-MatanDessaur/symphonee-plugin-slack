@@ -2,7 +2,7 @@
   "id": "slack",
   "name": "Slack Bridge",
   "version": "1.0.0",
-  "description": "Read Slack channels, reply to threads, and post messages without leaving DevOps Pilot",
+  "description": "Read Slack channels, reply to threads, and post messages without leaving Symphonee",
   "icon": "message-square",
   "tint": "97, 20, 140",
   "instructions": "instructions.md",
